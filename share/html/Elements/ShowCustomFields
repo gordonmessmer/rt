@@ -54,9 +54,13 @@
 % my $Values = $Object->CustomFieldValues( $CustomField->Id );
 % my $count = $Values->Count;
 % next if $HideEmpty and not $count;
+% my $CustomFieldName = $CustomField->Name;
+%# The following line ensures invalid characters are removed (supports world languages).
+% $CustomFieldName =~ s/\P{ID_Continue}+/-/g;
 % my @classes = (
 %   'custom-field',
 %   'custom-field-'.$CustomField->id,
+%   'custom-field-'.$CustomFieldName
 % );
 % push @classes, 'unset-field' if not $count;
 % $m->callback( CallbackName => 'ModifyFieldClasses', CustomField => $CustomField,
