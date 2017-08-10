@@ -1881,6 +1881,11 @@ sub MergeInto {
     if ( $MergeInto->Id == $self->Id ) {
         return ( 0, $self->loc("Can't merge a ticket into itself") );
     }
+    
+    # Cannot merge into a reminder
+    if ($MergeInto->Type eq 'reminder'){
+        return(0, "Reminders cannot be merged");
+    };
 
     # Make sure the current user can modify the new ticket.
     unless ( $MergeInto->CurrentUserHasRight('ModifyTicket') ) {
